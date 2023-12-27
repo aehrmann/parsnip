@@ -1,0 +1,27 @@
+#! /usr/env/bin ruby
+
+require "optparse"
+require_relative "../lib/parsnip/parser"
+
+options = {}
+
+OptionParser.new do |parser|
+  parser.banner = "Usage: parsnip pattern_file.txt [options]"
+
+  parser.on("-f", "--file=FILE", "Specify an input file to parse") do |filename|
+    options[:filename] = filename
+  end
+
+  parser.on("-h", "--help", "Show help and usage information") do |help|
+    puts parser
+    exit
+  end
+end.parse!
+
+
+if options[:filename]
+  pattern_text = File.read(ARGV[0])
+  puts Parsnip::Parser.new.parse(pattern_text)
+else
+  puts Parsnip::Parser.new.parse(ARGV[0])
+end
