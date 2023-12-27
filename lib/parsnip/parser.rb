@@ -2,7 +2,7 @@ require "parslet"
 
 module Parsnip
   class Parser < Parslet::Parser
-    rule(:integer) { match("[0-9]").repeat(1) }
+    rule(:integer) { match("[0-9]").repeat(1) >> space? }
     root(:integer)
 
     rule(:space) { match('\s').repeat(1) }

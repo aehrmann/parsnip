@@ -1,6 +1,7 @@
 #! /usr/env/bin ruby
 
 require "optparse"
+require "parsnip"
 require_relative "../lib/parsnip/parser"
 
 options = {}
@@ -18,10 +19,12 @@ OptionParser.new do |parser|
   end
 end.parse!
 
-
-if options[:filename]
-  pattern_text = File.read(ARGV[0])
-  puts Parsnip::Parser.new.parse(pattern_text)
-else
-  puts Parsnip::Parser.new.parse(ARGV[0])
+def parse(text)
+  parser = Parsnip::Parser.new
+  pp parser.parse(text)
+rescue Parslet::ParseFailed => failure
+  pp failure.parse_failure_cause.ascii_tree
 end
+
+text = options[:filename] ? File.read(ARGV[0]) : ARGV[0]
+parse(text)
