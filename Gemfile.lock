@@ -59,6 +59,7 @@ PLATFORMS
   x86_64-darwin-23
 
 DEPENDENCIES
+  parslet (~> 2.0)
   parsnip!
   pry (~> 0.14.2)
   rake (~> 13.0)
